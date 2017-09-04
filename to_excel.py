@@ -13,23 +13,17 @@ import pymysql
 
 def export(outputpath):
     conn = pymysql.connect(
-            host='192.168.100.114',
+            host='192.168.100.xxx',
             port=3306,
             db='fh_app_tmp2',
-            user='fh',
-            passwd='fh',
+            user='xx',
+            passwd='xx',
             charset='utf8'
         )
     cursor = conn.cursor()
     #sql语句
     sql1 = '''
-    SELECT fo.son_order_id,
-    house_province,
-    FROM_UNIXTIME(fangkuan_time)
-    from fh_order fo
-    LEFT JOIN fh_fangkuan_confirm ffc on fo.son_order_id=ffc.son_order_id
-    where order_status =10 and daihou_property!=1
-    order by caiwu_confirm_time DESC limit 10;
+    SELECT 
     '''
     
     count = cursor.execute(sql1)
