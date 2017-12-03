@@ -33,11 +33,11 @@ SELECT
 #连接数据库
 def py_conn_db(sql):
     conn = pymysql.connect(
-        host='xxx',
-        port=3307,
-        db='xxx',
-        user='xxx',
-        passwd='xxx',
+        host='127.0.0.1',
+        port=3306,
+        db='test',
+        user='root',
+        passwd='1234',
         charset='utf8'
         )
     cursor = conn.cursor()
