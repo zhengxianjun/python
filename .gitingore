@@ -1,4 +1,4 @@
 #windows
 .idea/
-__pycache__/
-*.ini
+__pycache__
+dbconfig.ini
