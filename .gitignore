@@ -1,2 +1,6 @@
 # pycharm IDE
 .idea/
+
+# windows
+.ini
+
