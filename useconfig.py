@@ -23,6 +23,7 @@ op = cf.options('db_mysql')
 item = cf.items('db_mysql')
 values = cf.get('db_mysql','db_mysql_user')
 print(se)
+
 print(op)
 print(item)
 print(values)

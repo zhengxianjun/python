@@ -1,4 +1,6 @@
-# pycharm
-.ieda/
-__pycache__/
+# pycharm IDE
+.idea/
+
+# windows
+*.ini
 
