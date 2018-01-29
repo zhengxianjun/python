@@ -1,5 +1,6 @@
 # pycharm IDE
 .idea/
+.__pycache__/
 
 # windows
 *.ini
