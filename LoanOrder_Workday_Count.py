@@ -116,6 +116,38 @@ data['渠道面签时间']=data['渠道面签时间'].astype('datetime64')
 # data['抵押完成时间']=data['抵押完成时间'].astype('datetime64')
 data['审查时间']=data['审查时间'].astype('datetime64')
 data['放款时间']=data['放款时间'].astype('datetime64')
-# print(data.head())
-# print(data.dtypes)
-data['放款天数'] = workDays(data['放款时间'],data['创建时间']).nWorkDaysCount()
+
+# 创建几个空list记录时间差
+fk = []
+cjxh = []
+xhfk = []
+fkmq = []
+mqsc = []
+scfk = []
+for i in range(len(data)):
+    fk.append((data.ix[i]['放款时间'] - data.ix[i]['创建时间']).total_seconds() / 3600 / 24 -
+              (workDays(data.ix[i]['创建时间'].date(), data.ix[i]['放款时间'].date()).nWorkDaysCount()))
+    cjxh.append((data.ix[i]['下户完成时间'] - data.ix[i]['创建时间']).total_seconds() / 3600 / 24 -
+                (workDays(data.ix[i]['创建时间'].date(), data.ix[i]['下户完成时间'].date()).nWorkDaysCount()))
+
+    xhfk.append((data.ix[i]['审批复核时间'] - data.ix[i]['下户完成时间']).total_seconds() / 3600 / 24 -
+                (workDays(data.ix[i]['下户完成时间'].date(), data.ix[i]['审批复核时间'].date()).nWorkDaysCount()))
+
+    fkmq.append((data.ix[i]['渠道面签时间'] - data.ix[i]['审批复核时间']).total_seconds() / 3600 / 24 -
+                (workDays(data.ix[i]['审批复核时间'].date(), data.ix[i]['渠道面签时间'].date()).nWorkDaysCount()))
+
+    mqsc.append((data.ix[i]['审查时间'] - data.ix[i]['渠道面签时间']).total_seconds() / 3600 / 24 -
+                (workDays(data.ix[i]['渠道面签时间'].date(), data.ix[i]['审查时间'].date()).nWorkDaysCount()))
+
+    scfk.append((data.ix[i]['放款时间'] - data.ix[i]['审查时间']).total_seconds() / 3600 / 24 -
+                (workDays(data.ix[i]['审查时间'].date(), data.ix[i]['放款时间'].date()).nWorkDaysCount()))
+
+# 创建-下户完成	下户完成-风控通过	风控通过-面签通过	面签通过-审查通过	审查通过-放款
+data['创建-下户完成']=cjxh
+data['下户完成-风控通过']=xhfk
+data['风控通过-面签通过']=fkmq
+data['面签通过-审查通过']=mqsc
+data['审查通过-放款']=scfk
+data['放款天数']=fk
+
+data.to_excel(r'LoanOrder_Workdays_Count.xlsx',sheet_name='sheet1')
